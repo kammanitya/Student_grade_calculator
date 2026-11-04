@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Grade Calculator</title>
+    <style>
+        body {
+            font: 16px Arial;
+            background: #f2f5f9;
+            color: #253247;
+            padding: 30px;
+        }
+
+        main {
+            max-width: 760px;
+            margin: auto;
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+        }
+
+        h1 {
+            color: #17365d;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccd5df;
+            border-radius: 6px;
+        }
+
+        button {
+            background: #17365d;
+            color: white;
+            cursor: pointer;
+        }
+
+        li {
+            padding: 9px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Student Grade Calculator</h1>
+        <p>Enter five marks (0–100), separated by commas.</p>
+        <input id="marks" placeholder="80,75,90,68,88">
+        <button onclick="calc()">Calculate</button>
+        <h2 id="result"></h2>
+
+        <script>
+            function calc() {
+                let a = document.querySelector('#marks').value
+                    .split(',')
+                    .map(Number);
+
+                if (
+                    a.length !== 5 ||
+                    a.some(x =>
+                        !Number.isFinite(x) || x < 0 || x > 100
+                    )
+                ) {
+                    document.querySelector('#result').textContent =
+                        'Enter exactly five valid marks.';
+                    return;
+                }
+
+                let m = a.reduce((x, y) => x + y, 0) / 5;
+                let g =
+                    m >= 90 ? 'A' :
+                    m >= 80 ? 'B' :
+                    m >= 70 ? 'C' :
+                    m >= 60 ? 'D' :
+                    m >= 50 ? 'E' :
+                    'Needs improvement';
+
+                document.querySelector('#result').textContent =
+                    'Average: ' + m.toFixed(1) + '% | Grade: ' + g;
+            }
+        </script>
+    </main>
+</body>
+</html>
